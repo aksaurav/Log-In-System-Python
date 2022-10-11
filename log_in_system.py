@@ -1,11 +1,40 @@
 import hashlib
 import time
+import string
+import secrets
+
+letter = string.ascii_letters # concatenation of letters lowercase and uppercase
+digits = string.digits # the string containing the numbers 0 to 9
+special_char = string.punctuation  # constant is the string of all special characters
+
+alphabet = letter + digits + special_char # concatenate the above string constants to get the alphabet
+pwd_lenght = 12
+
+
+def pwd_generator():
+    while True: # infinite loop
+        pwd = ''
+        for i in range(pwd_lenght):
+            pwd += ''.join(secrets.choice(alphabet))
+    
+    # setting up the conditions
+        if (any(char in special_char for char in pwd) and sum(char in digits for char in pwd)>=2):
+            break
+
+    print(pwd)
+
+
 
 def signup():
     # getting user inputs
     email = input("Enter email address: ")
-    pwd = input("Enter password: ")
-    conf_pwd = input("Confirm password: ")
+    pwd_gen = input("Type 'g' to generate new password or type 'm' to enter your own password: (g/m): ")
+    if pwd_gen == 'g':
+        pwd_generator()
+    elif pwd_gen == 'm':
+        pwd = input("Enter your password: ")
+        
+        conf_pwd = input("Confirm password: ")
 
     # email slicer
     for i in range(len(email)):
@@ -25,11 +54,11 @@ def signup():
             f.write(hash1)
         f.close()
         time.sleep(2)
-        print("You have registered successfully!")
+        print(f" Hello {username}, You have registered successfully!")
         print(f'Your user Name is {username} and domain is {domain}')
     else:
         print("Password did not match")
-    
+
 
 
 def login():
@@ -64,8 +93,3 @@ while 1:
         break
     else:
         print("Wrong Choice!")
-
-    
-
-
-
